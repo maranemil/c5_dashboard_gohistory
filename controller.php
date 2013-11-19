@@ -5,7 +5,7 @@ class c5DashboardGohistoryPackage extends Package
 {
 	
 	protected $pkgHandle = 'c5_dashboard_gohistory';
-	protected $appVersionRequired = "5.4.1";
+	protected $appVersionRequired = "5.6.2.1";
 	protected $pkgVersion = "0.1.1";
 
 
