@@ -67,7 +67,9 @@ $valt = Loader::helper('validation/token');
 $disp = '<script type="text/javascript">'."\n";
 $disp .=  "var CCM_SECURITY_TOKEN = '" . $valt->generate() . "';"."\n";
 $disp .= "</script>"."\n";
-//require(DIR_FILES_ELEMENTS_CORE . '/header_required.php'); 
+
+//require(DIR_FILES_ELEMENTS_CORE . '/header_required.php');
+
 $v->addHeaderItem($disp);
 Loader::element('header_required', array('disableTrackingCode' => true));
 $backgroundImage = Loader::helper('concrete/dashboard')->getDashboardBackgroundImage();
@@ -99,7 +101,7 @@ $backgroundImage = Loader::helper('concrete/dashboard')->getDashboardBackgroundI
 	$_SESSION['dashboardHasSeenImage'] = true;
 } ?>
 
-<?php  if (isset($backgroundImage->caption) && $backgroundImage->caption) { ?>
+<?php if (isset($backgroundImage->caption) && $backgroundImage->caption) { ?>
 	<div id="ccm-dashboard-background-caption" class="ccm-ui"><div id="ccm-dashboard-background-caption-inner"><?php  if ($backgroundImage->url) { ?><a target="_blank" href="<?php echo $backgroundImage->url?>"><?php  } ?><?php echo $backgroundImage->caption?><?php  if ($backgroundImage->url) { ?></a><?php  } ?></div></div>
 <?php  } ?>
 
@@ -137,13 +139,20 @@ $backgroundImage = Loader::helper('concrete/dashboard')->getDashboardBackgroundI
 </ul>
 
 <ul id="ccm-system-nav">
-<li><a class="ccm-icon-dashboard ccm-menu-icon" id="ccm-nav-dashboard<?php  if ($md->isMobile()) { ?>-mobile<?php  } ?>" href="<?php echo $this->url('/dashboard')?>"><?php echo t('Dashboard')?></a></li>
-<li id="ccm-nav-intelligent-search-wrapper"><input type="search" placeholder="<?php echo t('Intelligent Search')?>" id="ccm-nav-intelligent-search" tabindex="1" /></li>
+    <li>
+        <a class="ccm-icon-dashboard ccm-menu-icon" id="ccm-nav-dashboard<?php  if ($md->isMobile()) { ?>-mobile<?php  } ?>" href="<?php echo $this->url('/dashboard')?>"><?php echo t('Dashboard')?></a>
+    </li>
+    <li id="ccm-nav-intelligent-search-wrapper">
+        <input type="text" placeholder="<?php echo t('Intelligent Search')?>" id="ccm-nav-intelligent-search" tabindex="1" />
+    </li>
 <?php  if ($md->isMobile() == false) { ?>
-	<li><a id="ccm-nav-sign-out" class="ccm-icon-sign-out ccm-menu-icon" href="<?php echo $this->url('/login', 'logout')?>"><?php echo t('Sign Out')?></a></li>
+	<li>
+	    <a id="ccm-nav-sign-out" class="ccm-icon-sign-out ccm-menu-icon" href="<?php echo $this->url('/login', 'logout')?>">
+	    <?php echo t('Sign Out')?>
+	    </a>
+	</li>
 <?php  } ?>
 </ul>
-
 </div>
 <?php 
 $_ih = Loader::helper('concrete/interface');
@@ -153,12 +162,8 @@ print $dh->addQuickNavToMenus($html);
 ?>
 </div>
 <div id="ccm-dashboard-page">
-
 <div id="ccm-dashboard-content">
-
 	<div class="container">
-
-
 	<?php  if (isset($error)) { ?>
 		<?php  
 		if ($error instanceof Exception) {
