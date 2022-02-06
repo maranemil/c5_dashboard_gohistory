@@ -1,5 +1,12 @@
-<?php  defined('C5_EXECUTE') or die("Access Denied."); ?>
-<?php  
+<?php
+
+
+/** @noinspection PhpUndefinedFunctionInspection */
+/** @noinspection PhpUndefinedConstantInspection */
+/** @noinspection PhpUndefinedClassInspection */
+
+defined('C5_EXECUTE') or die("Access Denied.");
+
 if ($_GET['_ccm_dashboard_external']) {
 	return;
 }
@@ -30,7 +37,7 @@ $md = new Mobile_Detect();
 
 $html = Loader::helper('html');
 $v = View::getInstance();
-if (!isset($enableEditing) || $enableEditing == false) {
+if (!isset($enableEditing) || $enableEditing === false) {
 	$v->disableEditing();
 }
 
@@ -50,13 +57,13 @@ if (ENABLE_PROGRESSIVE_PAGE_REINDEX && Config::get('DO_PAGE_REINDEX_CHECK')) {
 	$v->addFooterItem('<script type="text/javascript">$(function() { ccm_doPageReindexing(); });</script>');
 }
 
-if (LANGUAGE != 'en') {
+if (LANGUAGE !== 'en') {
 	$v->addFooterItem($html->javascript('i18n/ui.datepicker-'.LANGUAGE.'.js'));
 }
 
 // Require CSS
 $v->addHeaderItem($html->css('ccm.app.css'));
-if ($md->isMobile() == true) {
+if ($md->isMobile() === true) {
 	$v->addHeaderItem($html->css('ccm.app.mobile.css')); ?>
 	<?php 		
 }
@@ -92,7 +99,7 @@ $backgroundImage = Loader::helper('concrete/dashboard')->getDashboardBackgroundI
 		});
 		ccm_testFixForms();
 	});
-</script>
+</script><title></title>
 
 </head>
 <body>
@@ -112,18 +119,16 @@ $backgroundImage = Loader::helper('concrete/dashboard')->getDashboardBackgroundI
 <li id="ccm-logo-wrapper"><?php echo Loader::helper('concrete/interface')->getToolbarLogoSRC()?></li>
 
     <?php
-    if(!strstr($_SERVER["HTTP_REFERER"],"dashboard")){
+    if(strpos($_SERVER["HTTP_REFERER"], "dashboard") === false){
 
         $backURL = $_SERVER["HTTP_REFERER"];
         $_SESSION["HTTP_REFERER"] = $_SERVER["HTTP_REFERER"];
 
-    } else {
-        if($_SESSION["HTTP_REFERER"]==""){
-            $backURL = $this->url('/');
-        }
-        else{
-            $backURL = $_SESSION["HTTP_REFERER"];
-        }
+    } else if($_SESSION["HTTP_REFERER"]===""){
+        $backURL = $this->url('/');
+    }
+    else{
+        $backURL = $_SESSION["HTTP_REFERER"];
     }
     ?>
 
@@ -143,9 +148,11 @@ $backgroundImage = Loader::helper('concrete/dashboard')->getDashboardBackgroundI
         <a class="ccm-icon-dashboard ccm-menu-icon" id="ccm-nav-dashboard<?php  if ($md->isMobile()) { ?>-mobile<?php  } ?>" href="<?php echo $this->url('/dashboard')?>"><?php echo t('Dashboard')?></a>
     </li>
     <li id="ccm-nav-intelligent-search-wrapper">
+        <label for="ccm-nav-intelligent-search">
         <input type="text" placeholder="<?php echo t('Intelligent Search')?>" id="ccm-nav-intelligent-search" tabindex="1" />
+        </label>
     </li>
-<?php  if ($md->isMobile() == false) { ?>
+<?php  if ($md->isMobile() === false) { ?>
 	<li>
 	    <a id="ccm-nav-sign-out" class="ccm-icon-sign-out ccm-menu-icon" href="<?php echo $this->url('/login', 'logout')?>">
 	    <?php echo t('Sign Out')?>
